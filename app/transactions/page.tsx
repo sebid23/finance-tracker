@@ -45,7 +45,7 @@ export default function Transactions() {
 
               <tbody className="divide-y divide-cyan-900/30">
                 {transactions.map((t) => {
-                  const isIncome = t.type === "income" ? "text-green-300" : "text-red-300";
+                  const isIncome = t.type === "income";
                   return (
                     <tr
                       key={t.id}
@@ -62,15 +62,15 @@ export default function Transactions() {
                       </td>
 
                       <td className="px-4 py-3">
-                        Category
+                        {t.category}
                       </td>
 
-                      <td className={`px-4 py-3 whitespace-nowrap ${isIncome}`}>
-                        <Badge>Income</Badge>
+                      <td className={`px-4 py-3 whitespace-nowrap ${isIncome ? "text-green-300" : "text-red-300"}`}>
+                        <Badge>{isIncome ? "Income" : "Expense"}</Badge>
                       </td>
 
                       <td
-                        className={`px-4 py-3 whitespace-nowrap text-left font-bold ${isIncome}`}
+                        className={`px-4 py-3 whitespace-nowrap text-left font-bold ${isIncome ? "text-green-300" : "text-red-300"}`}
                       >
                         {isIncome ? "+" : "-"}${t.amount.toLocaleString()}
                       </td>
