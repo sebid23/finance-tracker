@@ -20,8 +20,9 @@ function Badge({ children } : {children : React.ReactNode}) {
 export default function Transactions() {
     return (
       <div className="py-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-lg font-bold">Transactions</span>
+        <span className="text-lg font-bold">Transactions</span>
+        <div className="flex justify-between items-center mt-2 mb-2">
+          <input className="w-60 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-sm outline-none transition" placeholder="Search transactions..." type="text" />
           <button className="rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer">
             Add transaction
           </button>
