@@ -23,23 +23,41 @@ function Badge({ children } : {children : React.ReactNode}) {
 
 export default function Transactions() {
     const [search, setSearch] = useState("");
-    const filteredTransactions = transactions.filter((t) => t.description.toLowerCase().includes(search.toLowerCase()));
+    const [filterType, setFilterType] = useState("all");
+    const filteredTransactions = transactions.filter((t) => {
+      const matchesSearch = t.description.toLowerCase().includes(search.toLowerCase());
+      const matchesType = filterType === "all" || t.type === filterType;
+
+      return matchesSearch && matchesType;
+    });
 
     return (
       <div className="py-6">
         <span className="text-lg font-bold">Transactions</span>
-        <div className="flex justify-between items-center mt-2 mb-2">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-60 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-sm outline-none transition"
+            className="w-full md:w-60 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-sm outline-none transition"
             placeholder="Search transactions..."
-            type="text" />
-          <button className="rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer">
-            Add transaction
-          </button>
+            type="text"
+          />
+          <div className="flex gap-2">
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="rounded-lg w-25 border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer outline-none"
+            >
+              <option className="rounded-lg bg-cyan-900/40" value="all">All types</option>
+              <option className="bg-cyan-900/40" value="income">Income</option>
+              <option className="bg-cyan-900/40" value="expense">Expense</option>
+            </select>
+            <button className="rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer">
+                Add transaction
+            </button>
+          </div>
         </div>
-        <div className="border-b border-cyan-900 mt-1"></div>
+        <div className="border-b border-cyan-900 mt-2"></div>
 
         {/* Table */}
         <div className="mt-4 overflow-hidden rounded-xl border border-cyan-900/40">
