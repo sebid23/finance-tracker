@@ -2,17 +2,6 @@
 
 import { useState } from "react";
 
-const transactions = [
-  { id: 1, date: "Mar 6, 2026", description: "Salary", category: "Income", type: "income", amount: 3000 },
-  { id: 2, date: "Mar 5, 2026", description: "Groceries", category: "Food", type: "expense", amount: 42 },
-  { id: 3, date: "Mar 4, 2026", description: "Netflix", category: "Entertainment", type: "expense", amount: 12 },
-  { id: 4, date: "Mar 3, 2026", description: "Electricity bill", category: "Bills", type: "expense", amount: 85 },
-  { id: 5, date: "Mar 2, 2026", description: "Freelance payment", category: "Income", type: "income", amount: 500 },
-  { id: 6, date: "Mar 1, 2026", description: "Gym", category: "Fitness", type: "expense", amount: 100 },
-  { id: 7, date: "Feb 28, 2026", description: "Internet", category: "Bills", type: "expense", amount: 150 },
-  { id: 8, date: "Feb 27, 2026", description: "Discord Nitro", category: "Entertainment", type: "expense", amount: 100 },
-]
-
 function Badge({ children } : {children : React.ReactNode}) {
     return (
         <span className="inline-flex items-center rounded-lg border border-cyan-900/60 bg-cyan-950/40 px-2.5 py-1 text-xs font-semibold">
@@ -22,10 +11,26 @@ function Badge({ children } : {children : React.ReactNode}) {
 }
 
 export default function Transactions() {
+    const [transactions, setTransactions] = useState([
+      { id: 1, date: "Mar 6, 2026", description: "Salary", category: "Income", type: "income", amount: 3000 },
+      { id: 2, date: "Mar 5, 2026", description: "Groceries", category: "Food", type: "expense", amount: 42 },
+      { id: 3, date: "Mar 4, 2026", description: "Netflix", category: "Entertainment", type: "expense", amount: 12 },
+      { id: 4, date: "Mar 3, 2026", description: "Electricity bill", category: "Bills", type: "expense", amount: 85 },
+      { id: 5, date: "Mar 2, 2026", description: "Freelance payment", category: "Income", type: "income", amount: 500 },
+      { id: 6, date: "Mar 1, 2026", description: "Gym", category: "Fitness", type: "expense", amount: 100 },
+      { id: 7, date: "Feb 28, 2026", description: "Internet", category: "Bills", type: "expense", amount: 150 },
+      { id: 8, date: "Feb 27, 2026", description: "Discord Nitro", category: "Entertainment", type: "expense", amount: 100 },
+    ]);
+
     const [search, setSearch] = useState("");
     const [filterType, setFilterType] = useState("all");
     const [sortType, setSortType] = useState("date_desc");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [description, setDescription] = useState("");
+    const [category, setCategory] = useState("");
+    const [type, setType] = useState("income");
+    const [amount, setAmount] = useState("");
+    const [date, setDate] = useState("");
 
     const filteredTransactions = transactions.filter((t) => {
       const matchesSearch = t.description.toLowerCase().includes(search.toLowerCase());
@@ -53,6 +58,27 @@ export default function Transactions() {
 
       return 0;
     })
+
+    function handleAddTransaction() {
+      const newTransaction = {
+        id: Date.now(),
+        date,
+        description,
+        category,
+        type,
+        amount: Number(amount),
+      };
+
+      setTransactions((prevTransactions) => ([newTransaction, ...prevTransactions]));
+
+      setDescription("");
+      setCategory("");
+      setType("income");
+      setAmount("");
+      setDate("");
+
+      setIsModalOpen(false);
+    }
 
     return (
       <div className="py-6">
@@ -179,6 +205,8 @@ export default function Transactions() {
                 <div>
                   <label className="mb-1 block text-sm text-gray-300">Description</label>
                   <input
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     type="text"
                     placeholder="Enter description"
                     className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
@@ -187,6 +215,8 @@ export default function Transactions() {
                 <div>
                   <label className="mb-1 block text-sm text-gray-300">Category</label>
                   <input
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
                     type="text"
                     placeholder="Enter category"
                     className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
@@ -194,7 +224,11 @@ export default function Transactions() {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm text-gray-300">Type</label>
-                  <select className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none">
+                  <select
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                    className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
+                  >
                     <option value="income">Income</option>
                     <option value="expense">Expense</option>
                   </select>
@@ -202,6 +236,8 @@ export default function Transactions() {
                 <div>
                   <label className="mb-1 block text-sm text-gray-300">Amount</label>
                   <input
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
                     type="number"
                     placeholder="0"
                     className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
@@ -210,6 +246,8 @@ export default function Transactions() {
                 <div>
                   <label className="mb-1 block text-sm text-gray-300">Date</label>
                   <input
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                     type="date"
                     className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
                   />
@@ -218,6 +256,7 @@ export default function Transactions() {
 
               <div className="mt-5 flex justify-center">
                 <button
+                  onClick={handleAddTransaction}
                   className="rounded-lg border border-cyan-900 bg-cyan-900/40 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-900/20 transition cursor-pointer"
                 >
                   Add transaction
