@@ -70,12 +70,32 @@ export default function Transactions() {
     })
 
     function handleAddTransaction() {
+      if (!description.trim()) {
+        alert("Description is required!");
+        return;
+      }
+
+      if (!category.trim()) {
+        alert("Category is required!");
+        return;
+      }
+
+      if (!amount || Number(amount) <= 0) {
+        alert("Amount must be greater than 0.")
+        return;
+      }
+
+      if (!date) {
+        alert("Date is required!");
+        return;
+      }
+
       const formattedDate = new Date(date).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
         year: "numeric",
       })
-      
+
       setTransactions((prevTransactions) => {
         const newId = prevTransactions.length > 0 ? Math.max(...prevTransactions.map((t) => t.id)) + 1 : 1;
         const newTransaction = {
@@ -95,6 +115,10 @@ export default function Transactions() {
     }
 
     function handleDelete(id: number) {
+      if (!confirm("Are you sure you want to delete this transaction?")) {
+        return;
+      }
+
       setTransactions(
         transactions.filter((t) => t.id !== id)
       )
@@ -120,6 +144,26 @@ export default function Transactions() {
 
     function handleUpdateTransaction() {
       if (!edit) return;
+
+      if (!description.trim()) {
+        alert("Description is required!");
+        return;
+      }
+
+      if (!category.trim()) {
+        alert("Category is required!");
+        return;
+      }
+
+      if (!amount || Number(amount) <= 0) {
+        alert("Amount must be greater than 0.")
+        return;
+      }
+
+      if (!date) {
+        alert("Date is required!");
+        return;
+      }
 
       const formattedDate = new Date(date).toLocaleDateString("en-US", {
         month: "short",
