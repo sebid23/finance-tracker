@@ -86,6 +86,12 @@ export default function Transactions() {
       setIsModalOpen(false);
     }
 
+    function handleDelete(id: number) {
+      setTransactions(
+        transactions.filter((t) => t.id !== id)
+      )
+    }
+
     return (
       <div className="py-6">
         <span className="text-lg font-bold">Transactions</span>
@@ -138,6 +144,7 @@ export default function Transactions() {
                   <th className="px-4 py-3 font-semibold">Category</th>
                   <th className="px-4 py-3 font-semibold">Type</th>
                   <th className="px-4 py-3 font-semibold text-left">Amount</th>
+                  <th className="px-4 py-3 font-semibold text-left">Actions</th>
                 </tr>
               </thead>
 
@@ -172,6 +179,17 @@ export default function Transactions() {
                         className={`px-4 py-3 whitespace-nowrap text-left font-bold ${isIncome ? "text-green-300" : "text-red-300"}`}
                       >
                         {isIncome ? "+" : "-"}${t.amount.toLocaleString()}
+                      </td>
+
+                      <td
+                        className="px-4 py-3 whitespace-nowrap text-left"
+                      >
+                        <button
+                          onClick={() => handleDelete(t.id)}
+                          className="rounded-lg border border-red-900 bg-red-900/40 px-2 py-1 text-sm text-white hover:bg-red-900/20 transition cursor-pointer"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   );
