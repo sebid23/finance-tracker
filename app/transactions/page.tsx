@@ -157,6 +157,20 @@ export default function Transactions() {
       setIsModalOpen(false);
     }
 
+    function resetForm() {
+      setEdit(null);
+      setDescription("");
+      setCategory("")
+      setType("income");
+      setAmount("");
+      setDate("");
+    }
+
+    function handleCloseModal() {
+      resetForm();
+      setIsModalOpen(false);
+    }
+
     return (
       <div className="py-6">
         <span className="text-lg font-bold">Transactions</span>
@@ -290,7 +304,7 @@ export default function Transactions() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-white">{edit ? "Edit transaction" : "Add transaction"}</h2>
                 <button
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={handleCloseModal}
                   className="text-gray-400 hover:text-white transition cursor-pointer"
                 >
                   X
