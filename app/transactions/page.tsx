@@ -2,6 +2,15 @@
 
 import { useState } from "react";
 
+type Transaction = {
+  id: number,
+  date: string,
+  description: string,
+  category: string,
+  type: "income" | "expense",
+  amount: number
+}
+
 function Badge({ children } : {children : React.ReactNode}) {
     return (
         <span className="inline-flex items-center rounded-lg border border-cyan-900/60 bg-cyan-950/40 px-2.5 py-1 text-xs font-semibold">
@@ -11,7 +20,7 @@ function Badge({ children } : {children : React.ReactNode}) {
 }
 
 export default function Transactions() {
-    const [transactions, setTransactions] = useState([
+    const [transactions, setTransactions] = useState<Transaction[]>([
       { id: 1, date: "Mar 6, 2026", description: "Salary", category: "Income", type: "income", amount: 3000 },
       { id: 2, date: "Mar 5, 2026", description: "Groceries", category: "Food", type: "expense", amount: 42 },
       { id: 3, date: "Mar 4, 2026", description: "Netflix", category: "Entertainment", type: "expense", amount: 12 },
@@ -19,16 +28,17 @@ export default function Transactions() {
       { id: 5, date: "Mar 2, 2026", description: "Freelance payment", category: "Income", type: "income", amount: 500 },
       { id: 6, date: "Mar 1, 2026", description: "Gym", category: "Fitness", type: "expense", amount: 100 },
       { id: 7, date: "Feb 28, 2026", description: "Internet", category: "Bills", type: "expense", amount: 150 },
-      { id: 8, date: "Feb 27, 2026", description: "Discord Nitro", category: "Entertainment", type: "expense", amount: 100 },
+      { id: 8, date: "Feb 27, 2026", description: "Discord Nitro", category: "Entertainment", type: "expense", amount: 100 }
     ]);
 
     const [search, setSearch] = useState("");
     const [filterType, setFilterType] = useState("all");
     const [sortType, setSortType] = useState("date_desc");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [edit, setEdit] = useState<number | null>(null);
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
-    const [type, setType] = useState("income");
+    const [type, setType] = useState<"income" | "expense">("income");
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
 
@@ -90,6 +100,24 @@ export default function Transactions() {
       setTransactions(
         transactions.filter((t) => t.id !== id)
       )
+    }
+
+    function handleEdit(transaction: Transaction) {
+      setEdit(transaction.id);
+
+      setDescription(transaction.description);
+      setCategory(transaction.category);
+      setType(transaction.type);
+      setAmount(String(transaction.amount));
+
+      const parsedDate = new Date(transaction.date);
+      const year = parsedDate.getFullYear();
+      const month = String(parsedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(parsedDate.getDate()).padStart(2, "0");
+
+      setDate(`${year}-${month}-${day}`);
+
+      setIsModalOpen(true);
     }
 
     return (
@@ -182,8 +210,14 @@ export default function Transactions() {
                       </td>
 
                       <td
-                        className="px-4 py-3 whitespace-nowrap text-left"
+                        className="flex px-4 py-3 whitespace-nowrap text-left gap-1"
                       >
+                        <button
+                          onClick={() => handleEdit(t)}
+                          className="rounded-lg border border-blue-900 bg-blue-900/40 px-2 py-1 text-sm text-white hover:bg-blue-900/20 transition cursor-pointer"
+                        >
+                          Edit
+                        </button>
                         <button
                           onClick={() => handleDelete(t.id)}
                           className="rounded-lg border border-red-900 bg-red-900/40 px-2 py-1 text-sm text-white hover:bg-red-900/20 transition cursor-pointer"
@@ -250,7 +284,7 @@ export default function Transactions() {
                   <label className="mb-1 block text-sm text-gray-300">Type</label>
                   <select
                     value={type}
-                    onChange={(e) => setType(e.target.value)}
+                    onChange={(e) => setType(e.target.value as "income" | "expense")}
                     className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
                   >
                     <option value="income">Income</option>
