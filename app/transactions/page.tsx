@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Separator from "@/app/components/ui/separator";
 import TransactionsTable from "@/app/components/ui/transactions/transactions-table";
 import TransactionsFilters from "@/app/components/ui/transactions/transactions-filters";
 import TransactionsModal from "@/app/components/ui/transactions/transactions-modal";
@@ -214,7 +215,7 @@ export default function Transactions() {
             onSortTypeChange={setSortType}
             onAddTransaction={() => setIsModalOpen(true)}
           />
-        <div className="border-b border-cyan-900 mt-2"></div>
+        <Separator/>
 
         {/* Table */}
         <TransactionsTable

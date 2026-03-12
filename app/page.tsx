@@ -1,3 +1,4 @@
+import Separator from "@/app/components/ui/separator";
 import StatCard from "@/app/components/ui/stat-card";
 import MonthlyChart from "@/app/components/ui/dashboard/monthly-chart";
 import RecentTransactions from "@/app/components/ui/dashboard/recent-transactions";
@@ -17,7 +18,7 @@ export default function Home() {
       <span className="text-lg font-bold">Overview</span>
 
       {/* Separator */}
-      <div className="border-b border-cyan-900 mt-1"></div>
+      <Separator/>
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-5 mb-5 px-6">
@@ -29,7 +30,7 @@ export default function Home() {
       <span className="text-lg font-bold">Analytics</span>
 
       {/* Separator */}
-      <div className="border-b border-cyan-900 mt-1 mb-5"></div>
+      <Separator/>
 
       {/* Chart */}
 
@@ -39,13 +40,11 @@ export default function Home() {
       <span className="text-lg font-bold">Recent Transactions</span>
 
       {/* Separator */}
-      <div className="border-b border-cyan-900 mt-1 mb-5"></div>
+      <Separator/>
 
       {/* Table Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="mt-1 text-sm text-gray-300/80">Latest activity across your accounts</div>
-        </div>
+      <div className="flex items-center justify-between mt-5">
+          <div className="text-sm text-gray-300/80">Latest activity across your accounts</div>
       </div>
 
       <RecentTransactions />

@@ -13,7 +13,7 @@ const data = [
 export default function MonthlyChart() {
     return (
         <>
-            <div className="rounded-xl border border-cyan-900/40 bg-gray-950/20 p-6 mb-5">
+            <div className="rounded-xl border border-cyan-900/40 bg-gray-950/20 p-6 mt-5 mb-5">
                 <h2 className="text-lg font-bold mb-4">Monthly Overview</h2>
 
                 <div className="h-64">

@@ -11,7 +11,7 @@ type Props = {
 export default function TransactionsFilters({ search, filterType, sortType, onSearchChange, onFilterTypeChange, onSortTypeChange, onAddTransaction }: Props) {
   return (
     <>
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between mb-2">
         <input
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
