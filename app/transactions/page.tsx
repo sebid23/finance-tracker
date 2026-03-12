@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Badge from "@/app/components/ui/badge";
 
 type Transaction = {
   id: number,
@@ -9,14 +10,6 @@ type Transaction = {
   category: string,
   type: "income" | "expense",
   amount: number
-}
-
-function Badge({ children } : {children : React.ReactNode}) {
-    return (
-        <span className="inline-flex items-center rounded-lg border border-cyan-900/60 bg-cyan-950/40 px-2.5 py-1 text-xs font-semibold">
-            {children}
-        </span>
-    )
 }
 
 export default function Transactions() {

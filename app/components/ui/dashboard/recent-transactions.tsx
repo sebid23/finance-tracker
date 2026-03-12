@@ -1,3 +1,5 @@
+import Badge from "@/app/components/ui/badge";
+
 const transactions = [
   { id: 1, date: "Mar 6, 2026", description: "Salary", category: "Income", type: "income", amount: 3000 },
   { id: 2, date: "Mar 5, 2026", description: "Groceries", category: "Food", type: "expense", amount: 42 },
@@ -8,14 +10,6 @@ const transactions = [
   { id: 7, date: "Feb 28, 2026", description: "Internet", category: "Bills", type: "expense", amount: 150 },
   { id: 8, date: "Feb 27, 2026", description: "Discord Nitro", category: "Entertainment", type: "expense", amount: 100 },
 ]
-
-function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-cyan-900/60 bg-cyan-950/40 px-2.5 py-1 text-xs font-semibold text-cyan-100">
-      {children}
-    </span>
-  )
-}
 
 export default function RecentTransactions() {
   return (
