@@ -1,13 +1,5 @@
+import { Transaction } from "@/app/types/transaction";
 import Badge from "@/app/components/ui/badge";
-
-type Transaction = {
-  id: number,
-  date: string,
-  description: string,
-  category: string,
-  type: "income" | "expense",
-  amount: number
-}
 
 type Props = {
   transactions: Transaction[];
