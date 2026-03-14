@@ -1,3 +1,5 @@
+import Dropdown from "@/app/components/ui/dropdown";
+
 type Props = {
   isOpen: boolean;
   edit: number | null;
@@ -14,6 +16,11 @@ type Props = {
   onDateChange: (value: string) => void;
   onSubmit: () => void;
 };
+
+const typeOptions = [
+  { value: "income", label: "Income" },
+  { value: "expense", label: "Expense" }
+]
 
 export default function TransactionsModal({ isOpen, edit, description, category, type, amount, date, onClose, onDescriptionChange, onCategoryChange, onTypeChange, onAmountChange, onDateChange, onSubmit }: Props) {
   return (
@@ -59,16 +66,12 @@ export default function TransactionsModal({ isOpen, edit, description, category,
               </div>
               <div>
                 <label className="mb-1 block text-sm text-gray-300">Type</label>
-                <select
+                <Dropdown
                   value={type}
-                  onChange={(e) =>
-                    onTypeChange(e.target.value as "income" | "expense")
-                  }
-                  className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
-                >
-                  <option value="income">Income</option>
-                  <option value="expense">Expense</option>
-                </select>
+                  onChange={(val) => onTypeChange(val as "income" | "expense")}
+                  options={typeOptions}
+                  className="flex-1 w-full [&>button]:px-3 [&>button]:py-2 [&>button]:text-sm"
+                />
               </div>
               <div>
                 <label className="mb-1 block text-sm text-gray-300">
