@@ -91,7 +91,7 @@ export default function TransactionsModal({ isOpen, edit, description, category,
                   value={date}
                   onChange={(e) => onDateChange(e.target.value)}
                   type="date"
-                  className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
+                  className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none appearance-none"
                 />
               </div>
             </div>
