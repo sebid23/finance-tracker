@@ -2,14 +2,25 @@ import Dropdown from "@/app/components/ui/dropdown";
 
 type Props = {
   search: string;
+  filterCategory: string;
   filterType: string;
   sortType: string;
   onSearchChange: (value: string) => void;
+  onFilterCategoryChange: (value: string) => void;
   onFilterTypeChange: (value: string) => void;
   onSortTypeChange: (value: string) => void;
   onAddTransaction: () => void;
 };
 
+const categoryOptions = [
+  { value: "all", label: "All categories" },
+  { value: "income", label: "Income" },
+  { value: "food", label: "Food" },
+  { value: "entertainment", label: "Entertainment" },
+  { value: "bills", label: "Bills" },
+  { value: "fitness", label: "Fitness" },
+  { value: "others", label: "Others" }
+]
 const typeOptions = [
   { value: "all", label: "All types" },
   { value: "income", label: "Income" },
@@ -23,7 +34,7 @@ const sortOptions = [
   { value: "amount_asc", label: "Amount (low - high)" }
 ]
 
-export default function TransactionsFilters({ search, filterType, sortType, onSearchChange, onFilterTypeChange, onSortTypeChange, onAddTransaction }: Props) {
+export default function TransactionsFilters({ search, filterCategory, filterType, sortType, onSearchChange, onFilterCategoryChange, onFilterTypeChange, onSortTypeChange, onAddTransaction }: Props) {
   return (
     <>
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between mb-2">
@@ -34,7 +45,13 @@ export default function TransactionsFilters({ search, filterType, sortType, onSe
           placeholder="Search transactions..."
           type="text"
         />
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <Dropdown
+            value={filterCategory}
+            onChange={onFilterCategoryChange}
+            options={categoryOptions}
+            className="flex-1"
+          />
           <Dropdown
             value={filterType}
             onChange={onFilterTypeChange}
@@ -49,7 +66,7 @@ export default function TransactionsFilters({ search, filterType, sortType, onSe
           />
           <button
             onClick={onAddTransaction}
-            className="flex-1 whitespace-nowrap rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer"
+            className="w-full md:w-fit whitespace-nowrap rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer"
           >
             Add transaction
           </button>

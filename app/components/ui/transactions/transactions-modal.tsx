@@ -4,18 +4,27 @@ type Props = {
   isOpen: boolean;
   edit: number | null;
   description: string;
-  category: string;
+  category: "income" | "food" | "entertainment" | "bills" | "fitness" | "others";
   type: "income" | "expense";
   amount: string;
   date: string;
   onClose: () => void;
   onDescriptionChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
+  onCategoryChange: (value: "income" | "food" | "entertainment" | "bills" | "fitness" | "others") => void;
   onTypeChange: (value: "income" | "expense") => void;
   onAmountChange: (value: string) => void;
   onDateChange: (value: string) => void;
   onSubmit: () => void;
 };
+
+const categoryOptions = [
+  { value: "income", label: "Income" },
+  { value: "food", label: "Food" },
+  { value: "entertainment", label: "Entertainment" },
+  { value: "bills", label: "Bills" },
+  { value: "fitness", label: "Fitness" },
+  { value: "others", label: "Others" }
+]
 
 const typeOptions = [
   { value: "income", label: "Income" },
@@ -56,12 +65,11 @@ export default function TransactionsModal({ isOpen, edit, description, category,
                 <label className="mb-1 block text-sm text-gray-300">
                   Category
                 </label>
-                <input
+                <Dropdown
                   value={category}
-                  onChange={(e) => onCategoryChange(e.target.value)}
-                  type="text"
-                  placeholder="Enter category"
-                  className="w-full rounded-lg border border-cyan-900 bg-cyan-900/50 px-3 py-2 text-sm outline-none"
+                  onChange={(val) => onCategoryChange(val as "income" | "food" | "entertainment" | "bills" | "fitness" | "others")}
+                  options={categoryOptions}
+                  className="flex-1 w-full [&>button]:px-3 [&>button]:py-2 [&>button]:text-sm"
                 />
               </div>
               <div>

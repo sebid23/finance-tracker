@@ -13,12 +13,13 @@ export default function Transactions() {
     const [transactions, setTransactions] = useState(initialTransactions);
 
     const [search, setSearch] = useState("");
+    const [filterCategory, setFilterCategory] = useState("all");
     const [filterType, setFilterType] = useState("all");
     const [sortType, setSortType] = useState("date_desc");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [edit, setEdit] = useState<number | null>(null);
     const [description, setDescription] = useState("");
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState<"income" | "food" | "entertainment" | "bills" | "fitness" | "others">("income");
     const [type, setType] = useState<"income" | "expense">("income");
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
@@ -27,9 +28,10 @@ export default function Transactions() {
 
     const filteredTransactions = transactions.filter((t) => {
       const matchesSearch = t.description.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = filterCategory === "all" || t.category === filterCategory;
       const matchesType = filterType === "all" || t.type === filterType;
 
-      return matchesSearch && matchesType;
+      return matchesSearch && matchesCategory && matchesType;
     });
 
     const sortedTransactions = [...filteredTransactions].sort((a, b) => {
@@ -64,6 +66,11 @@ export default function Transactions() {
       setPage(1);
     }
 
+    function handleCategoryChange(value: string) {
+      setFilterCategory(value);
+      setPage(1);
+    }
+
     function handleTypeChange(value: string) {
       setFilterType(value);
       setPage(1);
@@ -72,11 +79,6 @@ export default function Transactions() {
     function handleAddTransaction() {
       if (!description.trim()) {
         alert("Description is required!");
-        return;
-      }
-
-      if (!category.trim()) {
-        alert("Category is required!");
         return;
       }
 
@@ -150,11 +152,6 @@ export default function Transactions() {
         return;
       }
 
-      if (!category.trim()) {
-        alert("Category is required!");
-        return;
-      }
-
       if (!amount || Number(amount) <= 0) {
         alert("Amount must be greater than 0.")
         return;
@@ -196,7 +193,7 @@ export default function Transactions() {
     function resetForm() {
       setEdit(null);
       setDescription("");
-      setCategory("")
+      setCategory("income");
       setType("income");
       setAmount("");
       setDate("");
@@ -212,9 +209,11 @@ export default function Transactions() {
         <span className="text-lg font-bold">Transactions</span>
           <TransactionsFilters
             search={search}
+            filterCategory={filterCategory}
             filterType={filterType}
             sortType={sortType}
             onSearchChange={handleSearchChange}
+            onFilterCategoryChange={handleCategoryChange}
             onFilterTypeChange={handleTypeChange}
             onSortTypeChange={setSortType}
             onAddTransaction={() => setIsModalOpen(true)}

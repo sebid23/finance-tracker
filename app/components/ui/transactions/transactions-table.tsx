@@ -42,7 +42,10 @@ export default function TransactionsTable({ transactions, onEdit, onDelete }: Pr
                       </div>
                     </td>
 
-                    <td className="px-4 py-3">{t.category}</td>
+                    <td className="px-4 py-3 capitalize"
+                    >
+                      <Badge>{t.category}</Badge>
+                    </td>
 
                     <td
                       className={`px-4 py-3 whitespace-nowrap ${isIncome ? "text-green-300" : "text-red-300"}`}
