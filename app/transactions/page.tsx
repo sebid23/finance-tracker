@@ -167,10 +167,20 @@ export default function Transactions() {
       setIsModalOpen(false);
     }
 
-    function handleConfirmDelete() {
+    async function handleConfirmDelete() {
       if (deleteId !== null) {
-        setTransactions(transactions.filter((t) => t.id !== deleteId));
-        setDeleteId(null);
+        const res = await fetch("api/transactions", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: deleteId })
+        })
+
+        if (res.ok) {
+          const response = await fetch("api/transactions");
+          const data = await response.json();
+          setTransactions(data);
+          setDeleteId(null);
+        }
       }
     }
 

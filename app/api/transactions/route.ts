@@ -44,3 +44,13 @@ export async function PUT(request: Request) {
     
     return NextResponse.json(data, { status: 200 });
 }
+
+export async function DELETE(request: Request) {
+    const { id } = await request.json();
+
+    const { data, error } = await supabase.from("transactions").delete().eq("id", id).select()
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    
+    return NextResponse.json(data, { status: 200 });
+}
