@@ -85,7 +85,7 @@ export default function Transactions() {
       setPage(1);
     }
 
-    function handleAddTransaction() {
+    async function handleAddTransaction() {
       if (!description.trim()) {
         alert("Description is required!");
         return;
@@ -101,19 +101,17 @@ export default function Transactions() {
         return;
       }
 
-      setTransactions((prevTransactions) => {
-        const newId = prevTransactions.length > 0 ? Math.max(...prevTransactions.map((t) => t.id)) + 1 : 1;
-        const newTransaction = {
-          id: newId,
-          date,
-          description,
-          category,
-          type,
-          amount: Number(amount)
-        }
+      const res = await fetch("api/transactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, description, category, type, amount })
+      })
 
-        return [newTransaction, ...prevTransactions];
-      });
+      if (res.ok) {
+        const response = await fetch("api/transactions");
+        const data = await response.json();
+        setTransactions(data);
+      }
       
       resetForm();
       setIsModalOpen(false);

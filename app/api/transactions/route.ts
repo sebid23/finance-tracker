@@ -5,7 +5,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const limit = searchParams.get("limit");
 
-    let query = supabase.from("transactions").select("*").order("date", { ascending: false });
+    let query = supabase.from("transactions").select("*").order("date", { ascending: false }).order("id", { ascending: false });
 
     if (limit) query = query.limit(Number(limit));
 
@@ -23,4 +23,14 @@ export async function GET(request: Request) {
     }));
 
     return NextResponse.json(mapped);
+}
+
+export async function POST(request: Request) {
+    const { date, description, category, type, amount } = await request.json();
+
+    const { data, error } = await supabase.from("transactions").insert({ date, description, category, type, amount}).select()
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    
+    return NextResponse.json(data, { status: 201 });
 }
