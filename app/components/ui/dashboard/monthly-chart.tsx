@@ -1,16 +1,32 @@
 "use client";
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { Transaction } from "@/app/types/transaction";
 
-const data = [
-    { Month: "Jan", Income: 2400, Expenses: 1800 },
-    { Month: "Feb", Income: 2800, Expenses: 1900 },
-    { Month: "Mar", Income: 3000, Expenses: 1120 },
-    { Month: "Apr", Income: 5000, Expenses: 2120 },
-    { Month: "May", Income: 4000, Expenses: 1500 },
-]
+type Props = {
+    transactions: Transaction[];
+}
 
-export default function MonthlyChart() {
+export default function MonthlyChart({ transactions }: Props) {
+    const chartData = transactions.reduce((accumulator, transaction) => {
+        const month = new Date(transaction.date).toLocaleDateString("en-US", { month: "short" });
+
+        if (!accumulator[month]) {
+            accumulator[month] = { Month: month, Income: 0, Expenses: 0 };
+        }
+        
+        if (transaction.type === "income") {
+            accumulator[month].Income += transaction.amount;
+        } else {
+            accumulator[month].Expenses += transaction.amount;
+        }
+        return accumulator;
+    }, {} as Record<string, { Month: string, Income: number, Expenses: number }>);
+
+    const chartDataArray = Object.values(chartData);
+    const monthOrder = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+    chartDataArray.sort((a, b) => monthOrder.indexOf(a.Month) - monthOrder.indexOf(b.Month));
+
     return (
         <>
             <div className="rounded-xl border border-cyan-900/40 bg-gray-950/20 p-6 mt-5 mb-5">
@@ -18,7 +34,7 @@ export default function MonthlyChart() {
 
                 <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={data}>
+                        <BarChart data={chartDataArray}>
                             <XAxis dataKey="Month" stroke="#9ca3af" tick={{ fontSize: 14 }} />
                             <YAxis stroke="#9ca3af" tick={{ fontSize: 14 }} tickFormatter={(value) => `$${value}`} />
                             <Tooltip

@@ -42,7 +42,9 @@ export default async function Home() {
 
       {/* Chart */}
 
-      <MonthlyChart />
+      <MonthlyChart
+        transactions={transactions}
+      />
 
       {/* Recent Transactions Section */}
       <span className="text-lg font-bold">Recent Transactions</span>
