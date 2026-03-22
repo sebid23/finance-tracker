@@ -1,20 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Header() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="w-full bg-cyan-900/50 text-sm text-white border-b border-cyan-900">
       <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
-        <h1 className="text-lg font-bold">Finance Tracker</h1>
+        <Link href="/" className="text-lg font-bold text-white transition">Finance Tracker</Link>
 
         {/* Desktop navigation */}
         <nav className="hidden md:flex gap-5 items-center">
-          <Link href="/">Dashboard</Link>
-          <Link href="/transactions">Transactions</Link>
+          <Link href="/" className={`${pathname === "/" ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white transition"}`}>Dashboard</Link>
+          <Link href="/transactions" className={`${pathname === "/transactions" ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white transition"}`}>Transactions</Link>
         </nav>
 
         {/* Mobile button */}
@@ -60,10 +62,10 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden border-t border-gray-700 bg-cyan-950">
           <nav className="flex flex-col px-6 py-4 gap-3">
-            <Link href="/" onClick={() => setMenuOpen(false)}>
+            <Link href="/" className={`${pathname === "/" ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white transition"}`} onClick={() => setMenuOpen(false)}>
               Dashboard
             </Link>
-            <Link href="/transactions" onClick={() => setMenuOpen(false)} className="py-2">
+            <Link href="/transactions" className={`${pathname === "/transactions" ? "text-cyan-400 font-semibold mt-2" : "text-gray-300 hover:text-white transition mt-2"}`} onClick={() => setMenuOpen(false)}>
               Transactions
             </Link>
           </nav>
