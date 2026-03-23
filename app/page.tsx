@@ -1,4 +1,5 @@
 import { supabase } from "@/app/lib/supabaseClient";
+import { TrendingUp, TrendingDown, Wallet } from "lucide-react";
 import Separator from "@/app/components/ui/separator";
 import StatCard from "@/app/components/ui/stat-card";
 import MonthlyChart from "@/app/components/ui/dashboard/monthly-chart";
@@ -23,9 +24,9 @@ export default async function Home() {
   const balance = totalIncome - totalExpenses;
 
   const stats = [
-    { title: "Total Income", value: `+$${totalIncome.toLocaleString()}`, border: "border-green-700", color: "bg-green-900/80" },
-    { title: "Total Expenses", value: `-$${totalExpenses.toLocaleString()}`, border: "border-red-700", color: "bg-red-900/80" },
-    { title: "Current Balance", value: `${balance >= 0 ? "+" : "-"}$${Math.abs(balance).toLocaleString()}`, border: "border-blue-700", color: "bg-blue-900/80" }
+    { title: "Total Income", value: `+$${totalIncome.toLocaleString()}`, border: "border-green-700", color: "bg-green-900/80", icon: TrendingUp },
+    { title: "Total Expenses", value: `-$${totalExpenses.toLocaleString()}`, border: "border-red-700", color: "bg-red-900/80", icon: TrendingDown },
+    { title: "Current Balance", value: `${balance >= 0 ? "+" : "-"}$${Math.abs(balance).toLocaleString()}`, border: "border-blue-700", color: "bg-blue-900/80", icon: Wallet }
   ]
 
   return (

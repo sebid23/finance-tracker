@@ -1,3 +1,4 @@
+import { Calendar, FileText, Tag, ArrowLeftRight, DollarSign, Settings, Pencil, Trash2, SearchX } from "lucide-react";
 import { Transaction } from "@/app/types/transaction";
 import Badge from "@/app/components/ui/badge";
 
@@ -14,12 +15,24 @@ export default function TransactionsTable({ transactions, onEdit, onDelete }: Pr
         <table className="w-full text-sm">
           <thead className="bg-cyan-950/40 text-gray-200">
             <tr className="text-left">
-              <th className="px-4 py-3 font-semibold">Date</th>
-              <th className="px-4 py-3 font-semibold">Description</th>
-              <th className="px-4 py-3 font-semibold">Category</th>
-              <th className="px-4 py-3 font-semibold">Type</th>
-              <th className="px-4 py-3 font-semibold text-left">Amount</th>
-              <th className="px-4 py-3 font-semibold text-left">Actions</th>
+              <th className="px-4 py-3 font-semibold">
+                <div className="flex items-center gap-1"><Calendar size={14}/>Date</div>
+              </th>
+              <th className="px-4 py-3 font-semibold">
+                <div className="flex items-center gap-1"><FileText size={14}/>Description</div>
+              </th>
+              <th className="px-4 py-3 font-semibold">
+                <div className="flex items-center gap-1"><Tag size={14}/>Category</div>
+              </th>
+              <th className="px-4 py-3 font-semibold">
+                <div className="flex items-center gap-1"><ArrowLeftRight size={14}/>Type</div>
+              </th>
+              <th className="px-4 py-3 font-semibold text-left">
+                <div className="flex items-center gap-1"><DollarSign size={14}/>Amount</div>
+              </th>
+              <th className="px-4 py-3 font-semibold">
+                <div className="flex items-center gap-1"><Settings size={14}/>Actions</div>
+              </th>
             </tr>
           </thead>
 
@@ -62,15 +75,15 @@ export default function TransactionsTable({ transactions, onEdit, onDelete }: Pr
                     <td className="flex px-4 py-3 whitespace-nowrap text-left gap-1">
                       <button
                         onClick={() => onEdit(t)}
-                        className="rounded-lg border border-blue-900 bg-blue-900/40 px-2 py-1 text-sm text-white hover:bg-blue-900/20 transition cursor-pointer"
+                        className="rounded-lg border border-blue-900 bg-blue-900/40 p-2 text-sm text-white hover:bg-blue-900/20 transition cursor-pointer"
                       >
-                        Edit
+                        <Pencil size={14}/>
                       </button>
                       <button
                         onClick={() => onDelete(t.id)}
-                        className="rounded-lg border border-red-900 bg-red-900/40 px-2 py-1 text-sm text-white hover:bg-red-900/20 transition cursor-pointer"
+                        className="rounded-lg border border-red-900 bg-red-900/40 p-2 text-sm text-white hover:bg-red-900/20 transition cursor-pointer"
                       >
-                        Delete
+                        <Trash2 size={14}/>
                       </button>
                     </td>
                   </tr>
@@ -80,6 +93,7 @@ export default function TransactionsTable({ transactions, onEdit, onDelete }: Pr
               <tr>
                 <td colSpan={6} className="px-4 py-10 text-center">
                   <div className="flex flex-col items-center gap-1">
+                    <SearchX size={20} className="text-gray-400"/>
                     <span className="text-sm font-semibold text-gray-200">
                       No transactions found.
                     </span>

@@ -1,3 +1,4 @@
+import { Search, Tag, ArrowLeftRight, ArrowUpDown, Plus } from "lucide-react";
 import Dropdown from "@/app/components/ui/dropdown";
 
 type Props = {
@@ -38,37 +39,44 @@ export default function TransactionsFilters({ search, filterCategory, filterType
   return (
     <>
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between mb-2">
-        <input
-          value={search}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full md:w-60 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-sm outline-none transition"
-          placeholder="Search transactions..."
-          type="text"
-        />
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="relative">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"/>
+          <input
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="pl-8 w-full md:w-60 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-sm outline-none transition"
+            placeholder="Search transactions..."
+            type="text"
+          />
+        </div>
+        
+        <div className="flex flex-wrap justify-center items-center gap-2">
           <Dropdown
             value={filterCategory}
             onChange={onFilterCategoryChange}
             options={categoryOptions}
             className="flex-1"
+            icon={Tag}
           />
           <Dropdown
             value={filterType}
             onChange={onFilterTypeChange}
             options={typeOptions}
             className="flex-1"
+            icon={ArrowLeftRight}
           />
           <Dropdown
             value={sortType}
             onChange={onSortTypeChange}
             options={sortOptions}
             className="flex-1"
+            icon={ArrowUpDown}
           />
           <button
             onClick={onAddTransaction}
-            className="w-full md:w-fit whitespace-nowrap rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer"
+            className="flex justify-center items-center gap-1 w-full md:w-fit whitespace-nowrap rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer"
           >
-            Add transaction
+            <Plus size={16}/>Add transaction
           </button>
         </div>
       </div>

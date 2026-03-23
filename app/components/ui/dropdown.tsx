@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { LucideIcon } from "lucide-react"
 
 type DropdownOption = {
   value: string;
@@ -10,9 +11,10 @@ type DropdownProps = {
   onChange: (value: string) => void;
   options: DropdownOption[];
   className?: string;
+  icon?: LucideIcon
 };
 
-export default function Dropdown({ value, onChange, options, className = "", }: DropdownProps) {
+export default function Dropdown({ value, onChange, options, className = "", icon: Icon }: DropdownProps) {
   const [open, setOpen] = useState(false);
 
   const selected = options.find((o) => o.value === value);
@@ -31,8 +33,9 @@ export default function Dropdown({ value, onChange, options, className = "", }: 
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full whitespace-nowrap items-center justify-between gap-2 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer outline-none transition-colors"
+        className="flex w-full whitespace-nowrap items-center justify-between gap-1 rounded-lg border border-cyan-900 bg-cyan-900/40 hover:bg-cyan-900/20 py-1 px-2 text-[14px] cursor-pointer outline-none transition-colors"
       >
+        {Icon && <Icon size={14}/>}
         <span>{selected?.label ?? "Select..."}</span>
         <svg
           className={`w-3 h-3 shrink-0 transition-transform duration-150 ${open ? "rotate-180" : ""}`}

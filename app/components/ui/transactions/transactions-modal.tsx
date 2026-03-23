@@ -1,3 +1,4 @@
+import { X, Save, Plus } from "lucide-react";
 import Dropdown from "@/app/components/ui/dropdown";
 
 type Props = {
@@ -45,7 +46,7 @@ export default function TransactionsModal({ isOpen, edit, description, category,
                 onClick={onClose}
                 className="text-gray-400 hover:text-white transition cursor-pointer"
               >
-                X
+                <X size={18}/>
               </button>
             </div>
             <div className="mt-4 space-y-4">
@@ -107,9 +108,9 @@ export default function TransactionsModal({ isOpen, edit, description, category,
             <div className="mt-5 flex justify-center">
               <button
                 onClick={onSubmit}
-                className="rounded-lg border border-cyan-900 bg-cyan-900/40 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-900/20 transition cursor-pointer"
+                className="flex items-center gap-1 rounded-lg border border-cyan-900 bg-cyan-900/40 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-900/20 transition cursor-pointer"
               >
-                {edit ? "Save changes" : "Add transaction"}
+                {edit ? <><Save size={16}/>Save changes</> : <><Plus size={16}/>Add transaction</>}
               </button>
             </div>
           </div>
