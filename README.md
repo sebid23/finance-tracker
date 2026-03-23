@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Finance Tracker
+
+A personal finance tracking application built with Next.js and Supabase. Track your income and expenses, visualize monthly trends, and manage your transactions.
+
+**Live Demo:** [finance-tracker-ten-tau.vercel.app](https://finance-tracker-ten-tau.vercel.app/)
+
+---
+
+## Tech Stack
+
+- **Next.js** — App Router, Server Components, API Routes
+- **React** — Server Components, Client Components, hooks, props
+- **TypeScript** — type safety
+- **Tailwind CSS** — styling
+- **Supabase** — PostgreSQL database
+- **Recharts** — monthly chart
+- **Lucide React** — icons
+
+---
+
+## Features
+
+### Dashboard
+- **Stats Cards** — Total Income, Total Expenses, and Current Balance filtered by the current month
+- **Monthly Chart** — bar chart showing income vs expenses per month
+- **Recent Transactions** — last 5 transactions
+
+### Transactions
+- **Search** — filter transactions by description
+- **Filter by Category** — Income, Food, Entertainment, Bills, Fitness, Others
+- **Filter by Type** — Income, Expense
+- **Sort** — by date (newest/oldest) or amount (high/low)
+- **Add Transaction** — modal with form validation
+- **Edit Transaction** — modal pre-filled with existing data
+- **Delete Transaction** — confirmation modal
+- **Pagination** — 10 transactions per page
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js
+- A [Supabase](https://supabase.com) account
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/sebid02/finance-tracker.git
+cd finance-tracker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file in the root:
+```env
+PROJECT_URL=your_supabase_url
+API_KEY=your_service_role_key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Create a `transactions` table in Supabase:
+```sql
+CREATE TABLE public.transactions (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  date date NOT NULL,
+  description text NOT NULL,
+  category text NOT NULL,
+  type text NOT NULL,
+  amount bigint NOT NULL,
+  CONSTRAINT transactions_pkey PRIMARY KEY (id)
+);
+```
 
-## Learn More
+5. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Routes
 
-## Deploy on Vercel
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/transactions` | Get all transactions |
+| GET | `/api/transactions?limit=5` | Get last 5 transactions |
+| POST | `/api/transactions` | Add a new transaction |
+| PUT | `/api/transactions` | Update a transaction |
+| DELETE | `/api/transactions` | Delete a transaction |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Planned Features
+
+- Authentication — each user sees only their own transactions
+- Export transactions to CSV
+- Light / Dark mode toggle
